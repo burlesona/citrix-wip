@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   # Resources
   resources :users
+  resources :stories, only: [:index, :show]
 
   # Custom Routes
   get 'login' => 'auth#get_login'
   post 'login' => 'auth#post_login'
   get 'logout' => 'auth#logout'
   get 'signup' => 'users#new'
-  root 'home#show'
+  root 'stories#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

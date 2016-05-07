@@ -9,6 +9,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def login!(user)
+    session[:user_id] = user.id
+    @current_user = CurrentUser.new(user)
+  end
+
   def authorize! &block
     raise AuthorizationError, "Forbidden" unless block.call
   end
