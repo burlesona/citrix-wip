@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  first_name: MyString
-  last_name: MyString
-  username: MyString
-  email: MyString
-  password_hash: MyString
+regular:
+  first_name: Regular
+  last_name: User
+  username: regular
+  email: regular@example.com
+  password_hash: $12345
   admin: false
 
-two:
-  first_name: MyString
-  last_name: MyString
-  username: MyString
-  email: MyString
-  password_hash: MyString
-  admin: false
+admin:
+  first_name: Admin
+  last_name: User
+  username: admin
+  email: admin@example.com
+  password_hash: $12345
+  admin: true

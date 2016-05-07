@@ -2,13 +2,16 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
+    @user = users(:regular)
   end
 
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:users)
+  test "should get index for admin" do
+    adm = CurrentUser.new(users(:admin))
+    @controller.stub(:current_user,adm) do
+      get :index
+      assert_response :success
+      assert_not_nil assigns(:users)
+    end
   end
 
   test "should get new" do
@@ -18,32 +21,49 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { admin: @user.admin, email: @user.email, first_name: @user.first_name, last_name: @user.last_name, password_hash: @user.password_hash, username: @user.username }
+      post :create, user: {
+        email: 'new@example.com',
+        username: 'foo',
+        first_name: 'foo',
+        last_name: 'bar',
+        password: 'secret',
+        password_confirmation: 'secret',
+      }
     end
 
     assert_redirected_to user_path(assigns(:user))
   end
 
   test "should show user" do
-    get :show, id: @user
-    assert_response :success
+    @controller.stub(:current_user,@user) do
+      get :show, id: @user
+      assert_response :success
+    end
   end
 
   test "should get edit" do
-    get :edit, id: @user
-    assert_response :success
+    @controller.stub(:current_user,@user) do
+      get :edit, id: @user
+      assert_response :success
+    end
   end
 
   test "should update user" do
-    patch :update, id: @user, user: { admin: @user.admin, email: @user.email, first_name: @user.first_name, last_name: @user.last_name, password_hash: @user.password_hash, username: @user.username }
-    assert_redirected_to user_path(assigns(:user))
+    @controller.stub(:current_user,@user) do
+      patch :update, id: @user, user: {
+        first_name: 'foo',
+        last_name: 'bar'
+      }
+      assert_redirected_to user_path(assigns(:user))
+    end
   end
 
   test "should destroy user" do
-    assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+    @controller.stub(:current_user,@user) do
+      assert_difference('User.count', -1) do
+        delete :destroy, id: @user
+      end
+      assert_redirected_to users_path
     end
-
-    assert_redirected_to users_path
   end
 end

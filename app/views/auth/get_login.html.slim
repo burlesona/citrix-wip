@@ -1,0 +1,13 @@
+h1 Login
+- if @error_message
+  .message.error = @error_message
+
+== form_tag login_path do
+  .field
+    == label_tag :username
+    == text_field_tag :username
+  .field
+    == label_tag :password
+    == password_field_tag :password
+  .field
+    == submit_tag "Login"
