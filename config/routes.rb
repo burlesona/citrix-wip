@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :users
+
+  get 'login' => 'auth#login'
+  get 'logout' => 'auth#login'
+  get 'signup' => 'users#new'
+
   root 'home#show'
 
   # Example of regular route:

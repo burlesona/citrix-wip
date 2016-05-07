@@ -9,5 +9,10 @@ html lang="en"
     == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 
   body
-    = yield
+    == render 'layouts/navigation'
+
+    - flash.each do |type, message|
+      .flash class=(type) = message
+
+    == yield
     == javascript_include_tag 'application', 'data-turbolinks-track' => true

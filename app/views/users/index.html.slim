@@ -1,0 +1,28 @@
+h1 Listing users
+= link_to 'New User', new_user_path, class: 'btn btn-primary'
+
+.table-responsive
+  table.table
+    thead
+      tr
+        th First name
+        th Last name
+        th Username
+        th Email
+        th Admin
+        th Action
+
+    tbody
+      - @users.each do |user|
+        tr
+          td = user.first_name
+          td = user.last_name
+          td = user.username
+          td = user.email
+          td = user.admin
+          td
+            = link_to 'Show', user
+            = link_to 'Edit', edit_user_path(user)
+            = link_to 'Destroy', user, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+
